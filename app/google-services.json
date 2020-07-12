@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "977794392653",
+    "firebase_url": "https://startup-d07d9.firebaseio.com",
+    "project_id": "startup-d07d9",
+    "storage_bucket": "startup-d07d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977794392653:android:f6997209276f0c8dcbf204",
+        "android_client_info": {
+          "package_name": "stop.one.startup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "977794392653-smqg58ngt826kohe65scal9gm2quit8a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "stop.one.startup",
+            "certificate_hash": "94c75faed4857d73863e584f481441af66a5359e"
+          }
+        },
+        {
+          "client_id": "977794392653-jcr9ecec190r6teisp9a9tt75l93bnlk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATTaSJOdTDIQijItyQNW08BCHbAzgfoBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "977794392653-jcr9ecec190r6teisp9a9tt75l93bnlk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
