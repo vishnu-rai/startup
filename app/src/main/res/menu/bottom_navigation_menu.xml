@@ -16,7 +16,7 @@
     <item
         android:id="@+id/action_more"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_more_horiz_24"
-        android:title="Nearby"
+        android:icon="@drawable/cart_icon"
+        android:title="Orders"
         app:showAsAction="ifRoom" />
 </menu>

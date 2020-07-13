@@ -25,12 +25,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         loadBottomFragment(new BottomHomeFrag());
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
+
         textViewProfileName = headerView.findViewById(R.id.text_view_name_profile);
         textViewProfileEmail = headerView.findViewById(R.id.text_view_email_profile);
         textViewEditProfile = headerView.findViewById(R.id.text_view_edit_profile);
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } else if (id == R.id.action_search){
             fragment = new BottomSearchFrag();
         }  else if (id == R.id.action_more){
-            fragment = new BottomNearbyFrag();
+            fragment = new BottomOrderFrag();
         }
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
