@@ -1,12 +1,14 @@
 package stop.one.startup;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -23,7 +25,8 @@ public class BottomHomeFrag extends Fragment {
 
     RecyclerView category_recyclerview, add_recyclerview, shop_recyclerview;
     FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-    Category_adapter adapter;
+//    Category_adapter adapter;
+    FirestoreRecyclerAdapter adapter;
     View rootView;
 
 
@@ -45,26 +48,44 @@ public class BottomHomeFrag extends Fragment {
 //        shop_recyclerview.setHasFixedSize(true);
 //        shop_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 4));
 
-        rec();
-
-
-        return rootView;
-    }
-
-    public void rec() {
         Query query = rootRef.collection("Category").orderBy("type", Query.Direction.ASCENDING);
 
-
-//        Toast.makeText(getActivity(),"toast", Toast.LENGTH_LONG).show();
         FirestoreRecyclerOptions<Category_holder> options = new FirestoreRecyclerOptions.Builder<Category_holder>()
                 .setQuery(query, Category_holder.class)
                 .build();
 
-        adapter = new Category_adapter(options);
-        category_recyclerview.setHasFixedSize(true);
-        category_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        adapter = new FirestoreRecyclerAdapter<Category_holder, RecyclerAdapter>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull final RecyclerAdapter holder, final int position, @NonNull final Category_holder model) {
+
+                holder.category_textview.setText(model.getType());
+
+                holder.card_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String docid=model.getType();
+                        Intent intent = new Intent(getContext(), Shops_name.class);
+                        intent.putExtra("Category name", docid);
+                        startActivity(intent);
+                    }
+                });
+
+            }
+
+            @NonNull
+            @Override
+            public RecyclerAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                View view = LayoutInflater.from(getContext()).inflate(R.layout.card_layout_category, parent, false);
+                return new RecyclerAdapter(view);
+            }
+        };
+
+        Log.d("tagging", String.valueOf(adapter));
+        category_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),4));
         category_recyclerview.setAdapter(adapter);
 
+        return rootView;
     }
 
 
@@ -84,35 +105,15 @@ public class BottomHomeFrag extends Fragment {
         }
     }
 
-    public class Category_adapter extends FirestoreRecyclerAdapter<Category_holder, Category_adapter.Viewholder> {
+    public class RecyclerAdapter extends RecyclerView.ViewHolder {
+        TextView category_textview;
+        RelativeLayout card_layout;
 
 
-        public Category_adapter(@NonNull FirestoreRecyclerOptions<Category_holder> options) {
-            super(options);
-        }
-
-        @Override
-        protected void onBindViewHolder(@NonNull Category_adapter.Viewholder holder, int position, @NonNull Category_holder model) {
-            holder.category_textview.setText(model.getType());
-            Toast.makeText(getContext(),"hey"+model.getType(),Toast.LENGTH_LONG).show();
-        }
-
-        @NonNull
-        @Override
-        public Category_adapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout_category, parent, false);
-            return new Category_adapter.Viewholder(v);
-        }
-
-        public class Viewholder extends RecyclerView.ViewHolder {
-            TextView category_textview;
-
-
-            public Viewholder(@NonNull View itemView) {
-                super(itemView);
-//            textViewPedido = itemView.findViewById(R.id.txt_pedidoview);
-                category_textview = itemView.findViewById(R.id.category_textview);
-            }
+        public RecyclerAdapter(@NonNull View itemView) {
+            super(itemView);
+            card_layout = itemView.findViewById(R.id.card_layout);
+            category_textview = itemView.findViewById(R.id.category_textview);
         }
     }
 

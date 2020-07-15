@@ -24,18 +24,20 @@ public class Shops_name extends AppCompatActivity {
     public FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     FirestoreRecyclerAdapter adapter;
 
-
+    String product_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shops_name);
 
+        Intent startingIntent = getIntent();
+        product_type = startingIntent.getStringExtra("Category name");
         shopname_recyclerview = findViewById(R.id.shopname_recyclerview);
         shopname_recyclerview.setHasFixedSize(true);
         shopname_recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
 
-        Query query = rootRef.collection("Category").document("Electronic").collection("Shops");
+        Query query = rootRef.collection("Category").document(product_type).collection("Shops");
 
         final FirestoreRecyclerOptions<shopname_holder> options = new FirestoreRecyclerOptions.Builder<shopname_holder>()
                 .setQuery(query, shopname_holder.class)
