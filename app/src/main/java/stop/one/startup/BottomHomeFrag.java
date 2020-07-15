@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -77,6 +81,38 @@ public class BottomHomeFrag extends Fragment {
         {
             adapter.stopListening();
 
+        }
+    }
+
+    public class Category_adapter extends FirestoreRecyclerAdapter<Category_holder, Category_adapter.Viewholder> {
+
+
+        public Category_adapter(@NonNull FirestoreRecyclerOptions<Category_holder> options) {
+            super(options);
+        }
+
+        @Override
+        protected void onBindViewHolder(@NonNull Category_adapter.Viewholder holder, int position, @NonNull Category_holder model) {
+            holder.category_textview.setText(model.getType());
+            Toast.makeText(getContext(),"hey"+model.getType(),Toast.LENGTH_LONG).show();
+        }
+
+        @NonNull
+        @Override
+        public Category_adapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout_category, parent, false);
+            return new Category_adapter.Viewholder(v);
+        }
+
+        public class Viewholder extends RecyclerView.ViewHolder {
+            TextView category_textview;
+
+
+            public Viewholder(@NonNull View itemView) {
+                super(itemView);
+//            textViewPedido = itemView.findViewById(R.id.txt_pedidoview);
+                category_textview = itemView.findViewById(R.id.category_textview);
+            }
         }
     }
 

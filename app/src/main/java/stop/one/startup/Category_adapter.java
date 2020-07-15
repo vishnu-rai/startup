@@ -23,8 +23,6 @@ public class Category_adapter extends FirestoreRecyclerAdapter<Category_holder, 
     protected void onBindViewHolder(@NonNull Viewholder holder, int position, @NonNull Category_holder model) {
         holder.category_textview.setText(model.getType());
         Log.d("check_22",model.getType());
-//        holder.textViewNomePedido.setText(model.getNome());
-
     }
 
     @NonNull
