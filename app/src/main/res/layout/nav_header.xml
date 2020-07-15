@@ -24,7 +24,7 @@
             />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginStart="5sp"
             android:layout_marginBottom="5sp">
@@ -32,31 +32,24 @@
                 android:id="@+id/text_view_name_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
                 android:padding="5sp"
-                android:gravity="start"
-                android:text="Name"
+                android:gravity="top|left"
+                android:text="User"
                 android:textColor="#515C6F"
-                android:textSize="18sp"/>
-
+                android:textSize="25sp"/>
             <TextView
-                android:id="@+id/text_view_email_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/text_view_phone_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="22dp"
+                android:padding="5sp"
+                android:gravity="top|left"
+                android:text="User"
                 android:textColor="#515C6F"
-                android:padding="5sp"
-                android:text="Email"
-                android:textSize="13sp"/>
-            <TextView
-                android:id="@+id/text_view_edit_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5sp"
-                android:text="Edit Profile"
-                android:textColor="#727C8E"
-                android:background="@drawable/background"
-                android:clickable="true"
-                />
+                android:textSize="15sp"/>
         </LinearLayout>
     </LinearLayout>
 

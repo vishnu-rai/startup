@@ -7,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,7 +68,15 @@ public class shop_products_list extends AppCompatActivity {
                 holder.add_to_cart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getApplicationContext(),"click",Toast.LENGTH_LONG).show();
+                        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+                        FirebaseUser user=firebaseAuth.getCurrentUser();
+                        String uiserId=user.getUid();
+
+                        Map<String, Object> us = new HashMap<>();
+                        us.put("prod name", model.getName());
+                        us.put("prod brand", model.getName());
+                        us.put("prod price", model.getName());
+                        us.put("prod name", model.getName());
                     }
                 });
 
