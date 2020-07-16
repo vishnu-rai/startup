@@ -25,7 +25,6 @@ public class BottomHomeFrag extends Fragment {
 
     RecyclerView category_recyclerview, add_recyclerview, shop_recyclerview;
     FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-//    Category_adapter adapter;
     FirestoreRecyclerAdapter adapter;
     View rootView;
 
@@ -63,9 +62,9 @@ public class BottomHomeFrag extends Fragment {
                 holder.card_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String docid=model.getType();
+                        String category_name=model.getType();
                         Intent intent = new Intent(getContext(), Shops_name.class);
-                        intent.putExtra("Category name", docid);
+                        intent.putExtra("Category name", category_name);
                         startActivity(intent);
                     }
                 });

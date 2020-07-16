@@ -24,7 +24,7 @@ public class Shops_name extends AppCompatActivity {
     public FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     FirestoreRecyclerAdapter adapter;
 
-    String product_type;
+    public static String category_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +32,12 @@ public class Shops_name extends AppCompatActivity {
         setContentView(R.layout.activity_shops_name);
 
         Intent startingIntent = getIntent();
-        product_type = startingIntent.getStringExtra("Category name");
+        category_name = startingIntent.getStringExtra("Category name");
         shopname_recyclerview = findViewById(R.id.shopname_recyclerview);
         shopname_recyclerview.setHasFixedSize(true);
         shopname_recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
 
-        Query query = rootRef.collection("Category").document(product_type).collection("Shops");
+        Query query = rootRef.collection("Category").document(category_name).collection("Shops");
 
         final FirestoreRecyclerOptions<shopname_holder> options = new FirestoreRecyclerOptions.Builder<shopname_holder>()
                 .setQuery(query, shopname_holder.class)
@@ -52,9 +52,9 @@ public class Shops_name extends AppCompatActivity {
                 holder.shopname_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String docid=getSnapshots().getSnapshot(position).getId();
+                        String shop_Id=getSnapshots().getSnapshot(position).getId();
                         Intent intent = new Intent(Shops_name.this, Shop_items.class);
-                        intent.putExtra("DocId", docid);
+                        intent.putExtra("shop_Id", shop_Id);
                         startActivity(intent);
                     }
                 });

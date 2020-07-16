@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -21,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class Shop_items extends AppCompatActivity {
 
-    public static String docId;
+    public static String shop_Id;
     RecyclerView shopitems_recyclerview;
     public FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     FirestoreRecyclerAdapter adapter;
@@ -35,15 +34,14 @@ public class Shop_items extends AppCompatActivity {
 
         Intent startingIntent = getIntent();
 //        if (startingIntent != null)
-        docId = startingIntent.getStringExtra("DocId");
-        Toast.makeText(getApplicationContext(), docId, Toast.LENGTH_LONG).show();
+        shop_Id = startingIntent.getStringExtra("shop_Id");
 
         shopitems_recyclerview = findViewById(R.id.shopitems_recyclerview);
         shopitems_recyclerview.setHasFixedSize(true);
         shopitems_recyclerview.setLayoutManager(new GridLayoutManager(this, 4));
 
-        Query query = rootRef.collection("Category").document("Electronic")
-                .collection("Shops").document(docId).collection("Items");
+        Query query = rootRef.collection("Category").document(Shops_name.category_name)
+                .collection("Shops").document(shop_Id).collection("Items");
 
         final FirestoreRecyclerOptions<shopitems_holder> options = new FirestoreRecyclerOptions.Builder<shopitems_holder>()
                 .setQuery(query, shopitems_holder.class)
@@ -58,9 +56,9 @@ public class Shop_items extends AppCompatActivity {
                 holder.shopitem_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String itemname = getSnapshots().getSnapshot(position).getId();
+                        String item_type_name = getSnapshots().getSnapshot(position).getId();
                         Intent intent = new Intent(Shop_items.this, shop_products_list.class);
-                        intent.putExtra("itemname", itemname);
+                        intent.putExtra("item_type_name", item_type_name);
                         startActivity(intent);
                     }
                 });

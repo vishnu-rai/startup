@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         int id = item.getItemId();
         Fragment fragment = null;
         if (id == R.id.cart_opt) {
-            fragment = new NavWishlistFrag();
+            fragment = new cart_frag();
         } else if (id == R.id.your_order) {
             fragment = new BottomOrderFrag();
         } else if (id == R.id.help_opt) {
