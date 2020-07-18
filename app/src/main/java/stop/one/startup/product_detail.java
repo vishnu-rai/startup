@@ -39,6 +39,10 @@ public class product_detail extends AppCompatActivity {
     String prod_id;
 
 
+    Map<String, Object> u = new HashMap<String, Object>();
+    Map<String, Object> us = new HashMap<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +57,6 @@ public class product_detail extends AppCompatActivity {
 
         Intent startingIntent = getIntent();
         prod_id = startingIntent.getStringExtra("prod_id");
-
-        final Map<String, Object> u = new HashMap<String, Object>();
 
 
         final CollectionReference db = rootRef.collection("Category").document(Shops_name.category_name)
@@ -94,19 +96,20 @@ public class product_detail extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 String uiserId = user.getUid();
 
-                Map<String, Object> us = new HashMap<>();
-                us.put("prod_name", prodname);
-                us.put("prod_brand", prodbrand);
-                us.put("prod_price", prodprice);
-                us.put("Category", Shops_name.category_name);
-                us.put("Shop_Id", Shop_items.shop_Id);
-                us.put("Item_name", shop_products_list.item_type_name);
-                us.put("Prod _Id", prod_id);
+                Map<String, Object> usa = new HashMap<>();
+
+                usa.put("prod_name", prodname);
+                usa.put("prod_brand", prodbrand);
+                usa.put("prod_price", prodprice);
+                usa.put("Category", Shops_name.category_name);
+                usa.put("Shop_Id", Shop_items.shop_Id);
+                usa.put("Item_name", shop_products_list.item_type_name);
+                usa.put("Prod _Id", prod_id);
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 db.collection("Users").document(uiserId).collection("Cart")
-                        .add(us)
+                        .add(usa)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
@@ -142,11 +145,10 @@ public class product_detail extends AppCompatActivity {
                 final String order_id = format + String.valueOf(n);
 
 
-                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-                String formattedDate = df.format(c);
+                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                String formattedDate = df.format(new Date());
 
 
-                Map<String, Object> us = new HashMap<>();
                 us.put("prod_name", prodname);
                 us.put("prod_brand", prodbrand);
                 us.put("prod_price", prodprice);
@@ -159,6 +161,10 @@ public class product_detail extends AppCompatActivity {
                 us.put("Canceled", "0");
                 us.put("Payment", "pending");
                 us.put("Delivered", "0");
+                final String[] city_ = new String[1];
+                final String[] address_ = new String[1];
+                final String[] phone_ = new String[1];
+                final String[] state_ = new String[1];
 
                 final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -174,10 +180,16 @@ public class product_detail extends AppCompatActivity {
                                 address = (document.getString("address"));
                                 phone = (document.getString("phone"));
                                 state = document.getString("state");
+                                city_[0] =city;
+                                address_[0]=address;
+                                state_[0]=state;
+                                phone_[0]=phone;
+
                                 u.put("city", city);
                                 u.put("state", state);
                                 u.put("phone", phone);
                                 u.put("address", address);
+
                             } else {
                                 Log.d("tag", "No such document");
                             }
@@ -187,6 +199,11 @@ public class product_detail extends AppCompatActivity {
                     }
                 });
 
+
+                us.put("city", city_[0]);
+                us.put("state", state_[0]);
+                us.put("phone", phone_[0]);
+                us.put("address", address_[0]);
 
                 u.put("Return", "0");
                 u.put("Cancelled", "0");

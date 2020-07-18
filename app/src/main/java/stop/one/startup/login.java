@@ -45,9 +45,7 @@ public class login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         buttonSend = findViewById(R.id.button_send);
         progressDialog = new ProgressDialog(this);
-        Intent intent = getIntent();
-        String phone = intent.getStringExtra("phone");
-        sendVerificationCode(phone);
+
 
         FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
         FirebaseUser user=firebaseAuth.getCurrentUser();
