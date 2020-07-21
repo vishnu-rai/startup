@@ -32,6 +32,7 @@ public class shop_products_list extends AppCompatActivity {
 
     public static String item_type_name,prodid;
 
+
     TextView text_view;
     RecyclerView product_recyclerview;
 

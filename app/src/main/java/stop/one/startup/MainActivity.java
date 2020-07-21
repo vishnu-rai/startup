@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         loadBottomFragment(new BottomHomeFrag());
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
@@ -116,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } else if (id == R.id.help_opt) {
             fragment = new help_frag();
         } else if (id == R.id.nav_item_profile_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this,login.class));
+            finish();
         } else if (id == R.id.action_home) {
             fragment = new BottomHomeFrag();
         } else if (id == R.id.action_search) {

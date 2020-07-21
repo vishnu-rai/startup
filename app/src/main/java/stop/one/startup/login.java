@@ -3,6 +3,7 @@ package stop.one.startup;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class login extends AppCompatActivity {
+public class login extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextPhone;
     private EditText editTextotp;
@@ -44,10 +45,9 @@ public class login extends AppCompatActivity {
         editTextotp = findViewById(R.id.edit_text_otp);
         mAuth = FirebaseAuth.getInstance();
         buttonSend = findViewById(R.id.button_send);
+        buttonSend.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
-        Intent intent = getIntent();
-        String phone = intent.getStringExtra("phone");
-        sendVerificationCode(phone);
+
 
         FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
         FirebaseUser user=firebaseAuth.getCurrentUser();
@@ -65,7 +65,13 @@ public class login extends AppCompatActivity {
                 if (v.length()==10)
                 {
                     buttonSend.setVisibility(View.VISIBLE);
-                    getPhoneNumber();
+                    buttonSend.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getPhoneNumber();
+                        }
+                    });
+
                     return true;
                 }
                 if (v.length()<10)
@@ -129,7 +135,7 @@ public class login extends AppCompatActivity {
         }
     };
 
-    private void verifyVerificationCode(String otp) {
+    private void verifyVerificationCode(final String otp) {
         editTextotp.setVisibility(View.VISIBLE);
         String code = editTextotp.getText().toString().trim();
         if (code.isEmpty() || code.length() < 6) {
@@ -137,8 +143,14 @@ public class login extends AppCompatActivity {
             editTextotp.requestFocus();
             return;
         }
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
-        signInWithPhoneAuthCredential(credential);
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
+                signInWithPhoneAuthCredential(credential);
+            }
+        });
+
     }
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
@@ -174,7 +186,7 @@ public class login extends AppCompatActivity {
                     }
                 });
     }
-
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_send:
