@@ -1,6 +1,7 @@
 package stop.one.startup;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,15 +57,15 @@ public class BottomOrderFrag extends Fragment {
                 else if(model.getDelivered()=="1")
                     holder.status.setText("Delivered");
 
-//                holder.product_layout.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        String category_name=model.getType();
-//                        Intent intent = new Intent(getContext(), Shops_name.class);
-//                        intent.putExtra("Category name", category_name);
-//                        startActivity(intent);
-//                    }
-//                });
+                holder.product_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String order_id= getSnapshots().getSnapshot(position).getId();;
+                        Intent intent = new Intent(getContext(), order_detail.class);
+                        intent.putExtra("order_id", order_id);
+                        startActivity(intent);
+                    }
+                });
 
             }
 
